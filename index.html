@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Choice Wheel — Премиум Конструктор</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <main class="container">
+        <h1 id="secretTrigger" class="glitch-title">Custom Choice Wheel</h1>
+        <p class="subtitle">Ультимативный инструмент для проведения прозрачных розыгрышей и интерактивов</p>
+
+        <div class="roulette-container">
+            <div class="roulette-wrapper">
+                <div class="pointer" id="roulettePointer"></div>
+                <div class="tape" id="rouletteTape"></div>
+            </div>
+            <div class="shadow-overlay"></div>
+        </div>
+
+        <div class="controls">
+            <button id="spinBtn" onclick="app.roulette.startSpin()">
+                <span>Испытать удачу</span>
+            </button>
+        </div>
+
+        <section class="public-panel">
+            <div class="panel-grid">
+                
+                <div class="card">
+                    <h3>Добавить новый вариант</h3>
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <input type="text" id="itemName" placeholder="Название награды или имя...">
+                        </div>
+                        <select id="itemColor">
+                            <option value="color-blue">🌌 Сапфировый стиль</option>
+                            <option value="color-purple">🔮 Аметистовый стиль</option>
+                            <option value="color-gold">👑 Янтарный стиль</option>
+                            <option value="color-gray">⚙️ Стальной стиль</option>
+                        </select>
+                        <button class="btn-secondary" onclick="app.roulette.addNewItem()">Добавить в пул</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Элементы в игре</h3>
+                    <div class="items-list" id="itemsList"></div>
+                    <button class="btn-danger" onclick="app.roulette.clearAllItems()">Очистить список</button>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="stealthPanel" class="stealth-panel hidden">
+            <div class="stealth-content">
+                <h4>Административный модуль калибровки</h4>
+                <div class="form-group-row">
+                    <label for="cheatSelect">Целевой финал:</label>
+                    <select id="cheatSelect">
+                        <option value="random">Случайное распределение (Честно)</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="winModal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-glow"></div>
+            <span class="modal-title">Результат вращения</span>
+            <div id="modalWinnerName" class="modal-winner">Вариант А</div>
+            <button class="btn-modal-close" onclick="app.roulette.closeModal()">Отлично</button>
+        </div>
+    </div>
+
+    <script src="js/db.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/roulette.js"></script>
+    <script>
+        const app = {};
+        window.addEventListener('DOMContentLoaded', () => {
+            app.db = new DatabaseModule();
+            app.admin = new AdminModule();
+            app.roulette = new RouletteModule();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,339 @@
+:root {
+    --bg-main: #0a0b0e;
+    --bg-card: #12141c;
+    --bg-input: #07080b;
+    --accent: #00f2fe;
+    --accent-glow: rgba(0, 242, 254, 0.4);
+    --border: #1f2431;
+    --text-muted: #64748b;
+    --text-light: #f8fafc;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-main);
+    color: #cbd5e1;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+/* Элементы заголовков */
+h1.glitch-title {
+    color: var(--text-light);
+    font-weight: 800;
+    font-size: 36px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    user-select: none;
+    background: linear-gradient(to right, #fff, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    margin-top: 0;
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* Оболочка рулетки с объемными тенями */
+.roulette-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    border-radius: 16px;
+    padding: 6px;
+    background: linear-gradient(145deg, #1e293b, #0f172a);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 30px rgba(0,0,0,0.5);
+}
+
+.roulette-wrapper {
+    position: relative;
+    width: 100%;
+    height: 140px;
+    background-color: #060709;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Фирменная стрелка с физикой подергивания */
+.pointer {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, #00f2fe, #4facfe);
+    z-index: 10;
+    box-shadow: 0 0 20px var(--accent);
+}
+
+/* Класс для микро-дёрганья стрелки при прокрутке */
+.pointer.tick {
+    animation: tickAnim 0.15s ease-in-out;
+}
+
+@keyframes tickAnim {
+    0% { transform: translateX(-50%) scaleX(1); }
+    50% { transform: translateX(-50%) scaleX(2) rotate(1deg); }
+    100% { transform: translateX(-50%) scaleX(1); }
+}
+
+/* Слайдер */
+.tape {
+    display: flex;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    will-change: transform;
+}
+
+/* Стилизация ячеек наград */
+.cell {
+    flex-shrink: 0;
+    width: 140px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    box-sizing: border-box;
+    border-right: 1px solid rgba(0, 0, 0, 0.4);
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-light);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    position: relative;
+}
+
+/* Эффект блика на ячейках */
+.cell::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 50%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.05), transparent);
+    pointer-events: none;
+}
+
+.cell.color-gray { background: linear-gradient(135deg, #1e293b, #334155); }
+.cell.color-blue { background: linear-gradient(135deg, #0f172a, #1d4ed8); }
+.cell.color-purple { background: linear-gradient(135deg, #3b0764, #6b21a8); }
+.cell.color-gold { background: linear-gradient(135deg, #78350f, #d97706); }
+
+/* Боковое затемнение рулетки */
+.shadow-overlay {
+    position: absolute;
+    top: 6px; left: 6px; right: 6px; bottom: 6px;
+    border-radius: 12px;
+    pointer-events: none;
+    background: linear-gradient(to right, rgba(6,7,9,0.9) 0%, transparent 15%, transparent 85%, rgba(6,7,9,0.9) 100%);
+    z-index: 5;
+}
+
+/* Кнопка запуска */
+.controls { margin: 40px 0; }
+
+button {
+    font-family: inherit;
+    background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
+    color: #000;
+    border: none;
+    padding: 16px 55px;
+    font-size: 16px;
+    font-weight: 800;
+    border-radius: 12px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 0 25px var(--accent-glow);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 35px var(--accent);
+}
+
+button:active { transform: translateY(1px) scale(0.99); }
+button:disabled { background: #1e293b; color: var(--text-muted); box-shadow: none; cursor: not-allowed; transform: none; }
+
+/* Второстепенные интерфейсы */
+.btn-secondary {
+    background: #1e293b;
+    border: 1px solid var(--border);
+    color: var(--text-light);
+    font-size: 13px;
+    padding: 12px;
+    font-weight: 600;
+    box-shadow: none;
+}
+.btn-secondary:hover { background: #334155; box-shadow: none; }
+
+.btn-danger {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    font-size: 12px;
+    padding: 10px;
+    width: 100%;
+    box-shadow: none;
+    margin-top: 15px;
+}
+.btn-danger:hover { background: #ef4444; color: #fff; }
+
+/* Сетка панелей */
+.public-panel { width: 100%; max-width: 800px; }
+.panel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    transition: border-color 0.3s;
+}
+.card:hover { border-color: #334155; }
+.card h3 { margin-top: 0; margin-bottom: 20px; font-size: 16px; color: var(--text-light); font-weight: 600; }
+
+.form-group { display: flex; flex-direction: column; gap: 14px; }
+
+input, select {
+    background: var(--bg-input);
+    color: var(--text-light);
+    border: 1px solid var(--border);
+    padding: 12px;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.3s;
+}
+input:focus, select:focus { border-color: #475569; box-shadow: 0 0 10px rgba(255,255,255,0.03); }
+
+/* Публичный список наград */
+.items-list {
+    height: 135px;
+    background: var(--bg-input);
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+}
+/* Стилизация скроллбара */
+.items-list::-webkit-scrollbar { width: 6px; }
+.items-list::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+
+.list-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    color: #e2e8f0;
+    animation: fadeIn 0.3s ease-out;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Стелс панель с красивой анимацией плавного выезда */
+.stealth-panel {
+    margin-top: 35px;
+    width: 100%;
+    max-width: 800px;
+    background: linear-gradient(135deg, #1c0a0d, #0f0507);
+    border: 1px solid #7f1d1d;
+    border-radius: 12px;
+    padding: 20px;
+    box-sizing: border-box;
+    transform: translateY(10px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.stealth-panel:not(.hidden) {
+    transform: translateY(0);
+    opacity: 1;
+}
+.stealth-content h4 { margin: 0 0 12px 0; color: #ef4444; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
+.form-group-row { display: flex; align-items: center; gap: 15px; font-size: 14px; }
+.form-group-row select { flex: 1; background: #000; border-color: #7f1d1d; }
+
+.hidden { display: none !important; }
+
+/* КУБИЧЕСКИЙ GLASSMORPHISM МОДАЛ ОКОНЧАНИЯ ИГРЫ */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(4, 5, 7, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: modalBlur 0.3s forwards;
+}
+
+.modal-card {
+    background: #161a24;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 40px;
+    border-radius: 24px;
+    text-align: center;
+    position: relative;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    transform: scale(0.8);
+    opacity: 0;
+    animation: modalOpen 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes modalBlur { to { opacity: 1; } }
+@keyframes modalOpen { to { transform: scale(1); opacity: 1; } }
+
+.modal-title {
+    display: block;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.modal-winner {
+    font-size: 28px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 30px;
+    text-shadow: 0 0 20px rgba(255,255,255,0.2);
+}
+
+.btn-modal-close {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    background: #fff;
+    color: #000;
+    box-shadow: none;
+    font-weight: 600;
+}
+.btn-modal-close:hover { background: #e2e8f0; transform: none; box-shadow: none;}
